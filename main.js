@@ -65,7 +65,7 @@ async function DropDown() {
                 TopBar.children[i].style.opacity = 1;
             }
         }
-    }, 1000);
+    }, 300);
 }
 
 function NavOpen() {
@@ -96,19 +96,64 @@ function OnMouseLeave(button) {
 }
 
 function Home() {
+    Active = false;
+
     document.getElementById("Arrow").style.transform = `rotate(0deg)`;
     SideBar.style.width = "0px";
     document.body.style.backgroundImage = "url('https://1drv.ms/i/s!AvASYBEBVN4YhDeYsTGhHgbzpYHK?embed=1&width=1792&height=1024')";
 
-    Active = false;
+    if (document.getElementsByClassName("Parts").length > 0) {
+        for (i = 0; i < document.getElementsByClassName("Parts").length; i++) {
+            document.body.removeChild(document.getElementsByClassName("Parts")[i]);
+        }
+    }
 }
 
 function NovaBuild() {
+    Active = false;
+
     document.getElementById("Arrow").style.transform = `rotate(0deg)`;
     SideBar.style.width = "0px";
     document.body.style.backgroundImage = "url('https://1drv.ms/i/s!AvASYBEBVN4YhDjJD3VCVolFvvKL?embed=1&width=4608&height=2963')";
 
-    Active = false;
+    if (document.getElementsByClassName("Parts").length == 0) {
+        let MainDiv = document.createElement("DIV");
+        MainDiv.style.height = "100%";
+        MainDiv.style.width = "100%";
+        MainDiv.style.display = "flex"; 
+        MainDiv.style.alignItems = "flex-start";
+        MainDiv.style.justifyContent = "flex-start"; 
+        MainDiv.style.paddingTop = "75px"; 
+        MainDiv.style.position = "absolute";
+        MainDiv.style.left = "0";
+        MainDiv.classList.add("Parts");
+        MainDiv.style.zIndex = "0";
+
+        let Table = document.createElement("TABLE");
+
+        let C1 = document.createElement("TR");
+        
+        let Tipo = document.createElement("TH");
+
+        let Adc = document.createElement("TH");
+
+        let C2 = document.createElement("TR");
+
+        Table.style.color = "white";
+        Table.style.textShadow = "2px 0 black, -2px 0 black, 0 2px black, 0 -2px black, 1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black"
+
+        Tipo.innerHTML = "Tipo";
+        Adc.innerHTML = "Adicionado";
+
+        MainDiv.appendChild(Table);
+        Table.appendChild(C1);
+        C1.appendChild(Tipo);
+        C1.appendChild(Adc);
+        Table.appendChild(C2);
+
+        document.body.appendChild(MainDiv);
+        
+    }
 }
 
 window.onload = DropDown;
