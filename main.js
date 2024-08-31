@@ -10,8 +10,8 @@ const PARTS = {
 let Active = false;
 
 function ReturnDesiredElement(father, type) {
-    for (i = 0; i < father.children.length; i++) {
-        if (father.children[i].tagName == type) {
+    for (let i = 0; i < father.children.length; i++) {
+        if (father.children[i].tagName === type) {
             return father.children[i];
         }
     }
@@ -28,8 +28,10 @@ async function fetchData(url) {
         
         if (contentType.includes('application/json')) {
             return await response.json();
-        } else {
+        } else if (contentType.includes('text/csv') || contentType.includes('text/plain')) {
             return await response.text();
+        } else {
+            throw new Error('Unsupported content type: ' + contentType);
         }
     } catch (error) {
         console.error(`Failed to fetch data from ${url}: ${error}`);
@@ -42,10 +44,10 @@ function populateHeader(data) {
 
 async function DropDown() {
     const PARTSDEF = {
-        AMDCPUS : fetchData(PARTS[1]),
-        GPUS : fetchData(PARTS[2]),
-        INTELCPUS : fetchData(PARTS[3]),
-        MOBOS : fetchData(PARTS[4]),
+        AMDCPUS: await fetchData(PARTS.AMDCPUS),
+        GPUS: await fetchData(PARTS.GPUS),
+        INTELCPUS: await fetchData(PARTS.INTELCPUS),
+        MOBOS: await fetchData(PARTS.MOBOS),
     }
 
     const TopBar = document.getElementById("TopBar");
@@ -53,10 +55,8 @@ async function DropDown() {
     TopBar.style.width = "100%";
     TopBar.style.height = "75px";
 
-    setTimeout(async () => {
+    setTimeout(() => {
         for (let i = 0; i < TopBar.children.length; i++) {
-            TopBar.children[i].style["pointer-events"] = "none";
-            
             if (TopBar.children[i].tagName === "BUTTON") {
                 document.getElementById("ArrowImage").style.opacity = 1;
             } else {
@@ -69,33 +69,25 @@ async function DropDown() {
 function NavOpen() {
     let SideBar = document.getElementById("SideBar");
    
-    switch(Active) {
-        case true:
-            SideBar.style.width = "0px";
-            break;
-        case false:
-            SideBar.style.width = "320px";
-            break;
-    }
-
-    Active = !Active
+    SideBar.style.width = Active ? "0px" : "320px";
+    Active = !Active;
 }
 
 function OnMouseEnter(button) {
-    let Span = ReturnDesiredElement(button, "SPAN")
+    let Span = ReturnDesiredElement(button, "SPAN");
 
     if (Span) {
-        button.style["border-color"] = "white";
+        button.style.borderColor = "white";
         Span.classList.add("Active");
         Span.style.color = "white";
     }
 }
 
 function OnMouseLeave(button) {
-    let Span = ReturnDesiredElement(button, "SPAN")
+    let Span = ReturnDesiredElement(button, "SPAN");
 
     if (Span) {
-        button.style["border-color"] = "grey";
+        button.style.borderColor = "grey";
         Span.classList.remove("Active");
         Span.style.color = "grey";
     }
