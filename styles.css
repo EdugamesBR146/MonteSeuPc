@@ -1,0 +1,70 @@
+body {
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: Main;
+    src: url('mainfont.otf');
+}
+
+#TopBar {
+    background-color: black;
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    transition: height .75s;
+    width: 0%;
+    height: 0px;
+    display: flex;     
+    align-items: center;
+    justify-content: left;
+    padding-right: 40px;
+    padding-left: 40px;
+}
+
+#TopBar img {
+    opacity: 0%;
+    transition: opacity 1s;
+}
+
+#Title {
+    color: white;
+    font-family: Main;
+    transition: opacity 1s;
+    opacity: 0%;
+    margin-left: 1%;
+    margin: 0;
+}
+
+#Logo {
+    height: 50px;
+    width: 50px;
+}
+
+#Arrow {
+    background-color: transparent;
+    border: transparent;
+    height: 25px;
+    width: 25px;
+    transition: all 1s;
+}
+
+#Arrow img {
+    height: 25px;
+    width: 25px;
+}
+
+#Arrow:hover {
+    width: 30px;
+    height: 30px;
+}
+
+.SideBar {
+    position: absolute;
+    background-color: black;
+    float: left;
+    transform: translateY(62px);
+    left: 0%;
+    height: 100vh;
+    width: 500px;
+}
