@@ -95,6 +95,14 @@ function OnMouseLeave(button) {
     }
 }
 
+function Home() {
+    document.getElementById("Arrow").style.transform = `rotate(0deg)`;
+    SideBar.style.width = "0px";
+    document.body.style.backgroundImage = "url('https://1drv.ms/i/s!AvASYBEBVN4YhDeYsTGhHgbzpYHK?embed=1&width=1792&height=1024')";
+
+    Active = false;
+}
+
 function NovaBuild() {
     document.getElementById("Arrow").style.transform = `rotate(0deg)`;
     SideBar.style.width = "0px";
