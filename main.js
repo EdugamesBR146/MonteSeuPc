@@ -1,5 +1,12 @@
 const Buttons = document.querySelectorAll('.Sidebar button');
 
+const PARTS = {
+    AMDCPUS: 'https://raw.githubusercontent.com/zymos/cpu-db/master/cpu-db.AMD.csv',
+    GPUS: 'https://raw.githubusercontent.com/voidful/gpu-info-api/gpu-data/gpu.json',
+    INTELCPUS: 'https://raw.githubusercontent.com/divinity76/intel-cpu-database/master/databases/intel_cpu_database.json',
+    MOBOS: 'https://raw.githubusercontent.com/JaJabinko/data/master/motherboard.json'
+};
+
 let Active = false;
 
 function ReturnDesiredElement(father, type) {
@@ -10,16 +17,47 @@ function ReturnDesiredElement(father, type) {
     }
 }
 
-function DropDown() {
-    let Title = document.getElementById("Title");
-    let TopBar = document.getElementById("TopBar");
+async function fetchData(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const contentType = response.headers.get('content-type');
+        
+        if (contentType.includes('application/json')) {
+            return await response.json();
+        } else {
+            return await response.text();
+        }
+    } catch (error) {
+        console.error(`Failed to fetch data from ${url}: ${error}`);
+    }
+}
+
+function populateHeader(data) {
+    console.log(data);
+}
+
+async function DropDown() {
+    const PARTSDEF = {
+        AMDCPUS : fetchData(PARTS[1]),
+        GPUS : fetchData(PARTS[2]),
+        INTELCPUS : fetchData(PARTS[3]),
+        MOBOS : fetchData(PARTS[4]),
+    }
+
+    const TopBar = document.getElementById("TopBar");
 
     TopBar.style.width = "100%";
     TopBar.style.height = "75px";
 
-    setTimeout(() => {
-        for (let i = 0; i < TopBar.children.length; i++){
-            if (TopBar.children[i].tagName == "BUTTON") {
+    setTimeout(async () => {
+        for (let i = 0; i < TopBar.children.length; i++) {
+            TopBar.children[i].style["pointer-events"] = "none";
+            
+            if (TopBar.children[i].tagName === "BUTTON") {
                 document.getElementById("ArrowImage").style.opacity = 1;
             } else {
                 TopBar.children[i].style.opacity = 1;
