@@ -1,5 +1,7 @@
 const Buttons = document.querySelectorAll('.Sidebar button');
 
+const SideBar = document.getElementById("SideBar");
+
 const PARTS = {
     AMDCPUS: 'https://raw.githubusercontent.com/zymos/cpu-db/master/cpu-db.AMD.csv',
     GPUS: 'https://raw.githubusercontent.com/voidful/gpu-info-api/gpu-data/gpu.json',
@@ -67,8 +69,8 @@ async function DropDown() {
 }
 
 function NavOpen() {
-    let SideBar = document.getElementById("SideBar");
-   
+    document.getElementById("Arrow").style.transform = Active ? `rotate(0deg)` : `rotate(180deg)`;
+
     SideBar.style.width = Active ? "0px" : "320px";
     Active = !Active;
 }
@@ -91,6 +93,14 @@ function OnMouseLeave(button) {
         Span.classList.remove("Active");
         Span.style.color = "grey";
     }
+}
+
+function NovaBuild() {
+    document.getElementById("Arrow").style.transform = `rotate(0deg)`;
+    SideBar.style.width = "0px";
+    document.body.style.backgroundImage = "url('https://1drv.ms/i/s!AvASYBEBVN4YhDjJD3VCVolFvvKL?embed=1&width=4608&height=2963')";
+
+    Active = false;
 }
 
 window.onload = DropDown;
