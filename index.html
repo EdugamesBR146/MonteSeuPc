@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="https://1drv.ms/i/s!AvASYBEBVN4YhDT9r9mEDiwjbxgT?embed=1&width=256">
+    <link rel="preload" as="image" href="https://1drv.ms/i/s!AvASYBEBVN4YhDjJD3VCVolFvvKL?embed=1&width=4608&height=2963">
     <title>MONTESEUPC</title>
 </head>
-<body>
+<body id="Body">
     <nav id="TopBar">
         <p id="Title">MONTESEUPC</p>
         <img src="https://1drv.ms/i/s!AvASYBEBVN4YhDT9r9mEDiwjbxgT?embed=1&width=256" id="Logo">
@@ -19,10 +20,10 @@
     </nav>
 
     <div class="SideBar" id="SideBar">
-        <button onmouseenter="OnMouseEnter(this)" onmouseleave="OnMouseLeave(this)"><span class="Active">INÍCIO</span></button>
-        <button onmouseenter="OnMouseEnter(this)" onmouseleave="OnMouseLeave(this)"><span>NOVA BUILD</span></button>   
-        <button onmouseenter="OnMouseEnter(this)" onmouseleave="OnMouseLeave(this)"><span>BUILDS SALVAS</span></button>
-        <button onmouseenter="OnMouseEnter(this)" onmouseleave="OnMouseLeave(this)"><span>CONFIGURA&Ccedil&OtildeES</span></button>      
+        <button onmouseenter="OnMouseEnter(this)" onmouseleave="OnMouseLeave(this)" onclick=""><span class="Active">INÍCIO</span></button>
+        <button onmouseenter="OnMouseEnter(this)" onmouseleave="OnMouseLeave(this)" onclick="NovaBuild()"><span>NOVA BUILD</span></button>   
+        <button onmouseenter="OnMouseEnter(this)" onmouseleave="OnMouseLeave(this)" onclick=""><span>BUILDS SALVAS</span></button>
+        <button onmouseenter="OnMouseEnter(this)" onmouseleave="OnMouseLeave(this)" onclick=""><span>CONFIGURA&Ccedil&OtildeES</span></button>      
     </div>
 
     <script src="main.js"></script>
