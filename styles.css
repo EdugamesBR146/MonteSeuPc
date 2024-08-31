@@ -3,6 +3,7 @@ body {
     background-image: url('https://1drv.ms/i/s!AvASYBEBVN4YhDeYsTGhHgbzpYHK?embed=1&width=1792&height=1024');
     background-repeat: no-repeat;
     background-size: cover;
+    z-index: -1;
 }
 
 @font-face {
@@ -15,7 +16,7 @@ body {
     position: fixed;
     left: 0%;
     top: 0%;
-    transition: height .75s;
+    transition: height .3s;
     width: 0%;
     height: 0px;
     display: flex;     
@@ -23,20 +24,28 @@ body {
     justify-content: left;
     padding-right: 40px;
     padding-left: 40px;
+    z-index: 2;
 }
 
 #TopBar img {
+    -webkit-user-drag: none;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none;
     opacity: 0%;
-    transition: opacity 1s;
+    transition: opacity .3s;
 }
 
 #Title {
     color: white;
     font-family: Main;
-    transition: opacity 1s;
+    transition: opacity .3s;
     opacity: 0%;
     margin-left: 1%;
     margin: 0;
+    -webkit-user-select: none;
+    -ms-user-select: none; 
+    user-select: none;
 }
 
 #Logo {
@@ -49,7 +58,7 @@ body {
     border: transparent;
     height: 25px;
     width: 25px;
-    transition: all .75s;
+    transition: all .3s;
 }
 
 #Arrow img {
@@ -65,7 +74,7 @@ body {
 .SideBar {
     overflow: hidden;
     display: grid;
-    transition: width .75s;
+    transition: width .5s;
     position: absolute;
     background-color: black;
     float: left;
@@ -75,6 +84,7 @@ body {
     width: 0px;
     grid-template-rows: repeat(auto-fill, 50px);
     gap: 0;
+    z-index: 1;
 }
 
 .SideBar button {
