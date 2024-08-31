@@ -70,6 +70,8 @@ body {
     left: 0%;
     height: 100vh;
     width: 0px;
+    grid-template-rows: repeat(auto-fill, 50px);
+    gap: 0;
 }
 
 .SideBar button {
@@ -77,13 +79,14 @@ body {
     height: 50px;
     background-color: transparent;
     border-width: 2px;
-    border-color: white;
+    border-color: grey;
     border-style: groove;
     transition: all 350ms;
     -webkit-transition: all 350ms linear;
 }
 
 .SideBar button span {
+    color: grey;
     margin: auto 0;
     transition: color 350ms;
     -webkit-transition: color 350ms linear;
