@@ -108,3 +108,9 @@ body {
 .Active {
     color: white;
 }
+
+@media screen and (min-width: 767px) {
+    body {
+        background-size: contain ;
+    }
+} 
