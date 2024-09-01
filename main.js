@@ -2,14 +2,8 @@ const Buttons = document.querySelectorAll('.Sidebar button');
 
 const SideBar = document.getElementById("SideBar");
 
-const PARTS = {
-    AMDCPUS: 'https://raw.githubusercontent.com/zymos/cpu-db/master/cpu-db.AMD.csv',
-    GPUS: 'https://raw.githubusercontent.com/voidful/gpu-info-api/gpu-data/gpu.json',
-    INTELCPUS: 'https://raw.githubusercontent.com/divinity76/intel-cpu-database/master/databases/intel_cpu_database.json',
-    MOBOS: 'https://raw.githubusercontent.com/JaJabinko/data/master/motherboard.json'
-};
-
 let Active = false;
+let Mobile = false;
 
 function ReturnDesiredElement(father, type) {
     for (let i = 0; i < father.children.length; i++) {
@@ -25,9 +19,9 @@ async function fetchData(url) {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        
+
         const contentType = response.headers.get('content-type');
-        
+
         if (contentType.includes('application/json')) {
             return await response.json();
         } else if (contentType.includes('text/csv') || contentType.includes('text/plain')) {
@@ -40,26 +34,36 @@ async function fetchData(url) {
     }
 }
 
+async function loadParts() {
+    const PARTS = {
+        AMDCPUS: await fetchData('https://raw.githubusercontent.com/zymos/cpu-db/master/cpu-db.AMD.csv'),
+        GPUS: await fetchData('https://raw.githubusercontent.com/voidful/gpu-info-api/gpu-data/gpu.json'),
+        INTELCPUS: await fetchData('https://raw.githubusercontent.com/divinity76/intel-cpu-database/master/databases/intel_cpu_database.json'),
+        MOBOS: await fetchData('https://raw.githubusercontent.com/JaJabinko/data/master/motherboard.json'),
+    };
+
+    console.log(PARTS);
+}
+
 function populateHeader(data) {
     console.log(data);
 }
 
 async function DropDown() {
-    const PARTSDEF = {
-        AMDCPUS: await fetchData(PARTS.AMDCPUS),
-        GPUS: await fetchData(PARTS.GPUS),
-        INTELCPUS: await fetchData(PARTS.INTELCPUS),
-        MOBOS: await fetchData(PARTS.MOBOS),
-    }
-
     const TopBar = document.getElementById("TopBar");
 
     TopBar.style.width = "100%";
     TopBar.style.height = "75px";
 
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        Mobile = true;
+    } else {
+        Mobile = false;
+    }
+
     setTimeout(() => {
         for (let i = 0; i < TopBar.children.length; i++) {
-            if (TopBar.children[i].tagName === "BUTTON") {
+            if (TopBar.children[i].tagName == "BUTTON") {
                 document.getElementById("ArrowImage").style.opacity = 1;
             } else {
                 TopBar.children[i].style.opacity = 1;
@@ -71,7 +75,15 @@ async function DropDown() {
 function NavOpen() {
     document.getElementById("Arrow").style.transform = Active ? `rotate(0deg)` : `rotate(180deg)`;
 
-    SideBar.style.width = Active ? "0px" : "320px";
+    switch (Mobile) {
+        case true:
+            SideBar.style.width = Active ? "0px" : "100%";
+            break;
+        case false:
+            SideBar.style.width = Active ? "0px" : "320px";
+            break;
+    }
+
     Active = !Active;
 }
 
@@ -101,6 +113,7 @@ function Home() {
     document.getElementById("Arrow").style.transform = `rotate(0deg)`;
     SideBar.style.width = "0px";
     document.body.style.backgroundImage = "url('https://1drv.ms/i/s!AvASYBEBVN4YhDeYsTGhHgbzpYHK?embed=1&width=1792&height=1024')";
+    document.body.style.overflowY = "hidden";
 
     if (document.getElementsByClassName("Parts").length > 0) {
         for (i = 0; i < document.getElementsByClassName("Parts").length; i++) {
@@ -115,45 +128,130 @@ function NovaBuild() {
     document.getElementById("Arrow").style.transform = `rotate(0deg)`;
     SideBar.style.width = "0px";
     document.body.style.backgroundImage = "url('https://1drv.ms/i/s!AvASYBEBVN4YhDjJD3VCVolFvvKL?embed=1&width=4608&height=2963')";
-
+    document.body.style.overflowY = "scroll";
+    
     if (document.getElementsByClassName("Parts").length == 0) {
+        const Tipos = [
+            "Armazenamento",
+            "Cooler",
+            "Processador",
+            "Fonte",
+            "Gabinete",
+            "Placa de Vídeo",
+            "Placa Mãe",
+            "Resfriamento",
+            "Memórias RAM",
+            "Periféricos",
+            "Controle",
+            "Monitor",
+            "Mouse",
+            "Teclado",
+            "Volante",
+        ];
+
         let MainDiv = document.createElement("DIV");
         MainDiv.style.height = "100%";
         MainDiv.style.width = "100%";
-        MainDiv.style.display = "flex"; 
+        MainDiv.style.display = "flex";
         MainDiv.style.alignItems = "flex-start";
-        MainDiv.style.justifyContent = "flex-start"; 
-        MainDiv.style.paddingTop = "75px"; 
+        MainDiv.style.justifyContent = "flex-start";
+        MainDiv.style.paddingTop = "75px";
         MainDiv.style.position = "absolute";
         MainDiv.style.left = "0";
         MainDiv.classList.add("Parts");
         MainDiv.style.zIndex = "0";
 
-        let Table = document.createElement("TABLE");
+        let Table = document.createElement("DIV");
+        Table.classList.add("table");
 
-        let C1 = document.createElement("TR");
-        
-        let Tipo = document.createElement("TH");
+        let TableHeader = document.createElement("DIV");
+        TableHeader.classList.add("table-header");
 
-        let Adc = document.createElement("TH");
+        let HeaderTipo = document.createElement("DIV");
+        HeaderTipo.classList.add("header__item");
+        HeaderTipo.innerHTML = '<a id="tipo" class="filter__link" href="#">Tipo</a>';
 
-        let C2 = document.createElement("TR");
+        let HeaderAdicionado = document.createElement("DIV");
+        HeaderAdicionado.classList.add("header__item");
+        HeaderAdicionado.innerHTML = '<a id="adicionado" class="filter__link" href="#">Adicionado</a>';
 
-        Table.style.color = "white";
-        Table.style.textShadow = "2px 0 black, -2px 0 black, 0 2px black, 0 -2px black, 1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black"
+        TableHeader.appendChild(HeaderTipo);
+        TableHeader.appendChild(HeaderAdicionado);
+        Table.appendChild(TableHeader);
 
-        Tipo.innerHTML = "Tipo";
-        Adc.innerHTML = "Adicionado";
+        let TableContent = document.createElement("DIV");
+        TableContent.classList.add("table-content");
 
+        Tipos.forEach(tipo => {
+            let row = document.createElement("DIV");
+            row.classList.add("table-row");
+
+            let tipoCell = document.createElement("DIV");
+            tipoCell.classList.add("table-data");
+            tipoCell.textContent = tipo;
+            row.appendChild(tipoCell);
+
+            let adicionadoCell = document.createElement("DIV");
+            adicionadoCell.classList.add("table-data");
+            
+            let button = document.createElement("BUTTON");
+            adicionadoCell.appendChild(button);
+
+            row.appendChild(adicionadoCell);
+
+            TableContent.appendChild(row);
+        });
+
+        Table.appendChild(TableContent);
         MainDiv.appendChild(Table);
-        Table.appendChild(C1);
-        C1.appendChild(Tipo);
-        C1.appendChild(Adc);
-        Table.appendChild(C2);
-
         document.body.appendChild(MainDiv);
-        
+
+        const properties = ['tipo', 'adicionado'];
+
+        $.each(properties, function (i, val) {
+            let orderClass = '';
+
+            $("#" + val).click(function (e) {
+                e.preventDefault();
+                $('.filter__link.filter__link--active').not(this).removeClass('filter__link--active');
+                $(this).toggleClass('filter__link--active');
+                $('.filter__link').removeClass('asc desc');
+
+                if (orderClass == 'desc' || orderClass == '') {
+                    $(this).addClass('asc');
+                    orderClass = 'asc';
+                } else {
+                    $(this).addClass('desc');
+                    orderClass = 'desc';
+                }
+
+                const parent = $(this).closest('.header__item');
+                const index = $(".header__item").index(parent);
+                const table = $('.table-content');
+                const rows = table.find('.table-row').get();
+                const isSelected = $(this).hasClass('filter__link--active');
+
+                rows.sort(function (a, b) {
+                    const x = $(a).find('.table-data').eq(index).text();
+                    const y = $(b).find('.table-data').eq(index).text();
+
+                    if (isSelected) {
+                        return x.localeCompare(y);
+                    } else {
+                        return y.localeCompare(x);
+                    }
+                });
+
+                $.each(rows, function (index, row) {
+                    table.append(row);
+                });
+
+                return false;
+            });
+        });
     }
 }
+
+loadParts();
 
 window.onload = DropDown;
