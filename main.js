@@ -67,8 +67,16 @@ async function DropDown() {
         }
 
         for (let i = 0; i < TopBar.children.length; i++) {
-            if (TopBar.children[i].tagName == "BUTTON") {
-                document.getElementById("ArrowImage").style.opacity = 1;
+            if (TopBar.children[i].tagName == "DIV") {
+                const child = TopBar.children[i];
+                
+                child.style.opacity = 1;
+
+                child.style.transform = `translateY(${TopBar.getBoundingClientRect().top + 4}px)`;
+
+                Array.from(child.children).forEach(element => {
+                    element.style.opacity = 1;
+                });
             } else {
                 TopBar.children[i].style.opacity = 1;
             }
@@ -76,8 +84,8 @@ async function DropDown() {
     }, 300);
 }
 
-function NavOpen() {
-    document.getElementById("Arrow").style.transform = Active ? `rotate(0deg)` : `rotate(180deg)`;
+function NavOpen(button) {
+    button.classList.toggle( "open" );
 
     switch (Mobile) {
         case true:
@@ -112,29 +120,34 @@ function OnMouseLeave(button) {
 }
 
 function Home() {
-    Active = false;
+    if (Active == true) {
+        Active = !Active;
 
-    document.getElementById("Arrow").style.transform = `rotate(0deg)`;
-    SideBar.style.width = "0px";
+        document.getElementById("menu-toggle-btn").classList.toggle("open");
+        SideBar.style.width = "0px";
+    }
+
     document.body.style.backgroundImage = "url('https://1drv.ms/i/s!AvASYBEBVN4YhDeYsTGhHgbzpYHK?embed=1&width=1792&height=1024')";
     document.body.style.overflowY = "hidden";
 
-    if (document.getElementsByClassName("Parts").length > 0) {
-        for (i = 0; i < document.getElementsByClassName("Parts").length; i++) {
-            document.body.removeChild(document.getElementsByClassName("Parts")[i]);
-        }
-    }
+    Array.from(document.getElementsByClassName("table")).forEach(element => {
+        element.remove();
+    });
+    
 }
 
 function NovaBuild() {
     Active = false;
 
-    document.getElementById("Arrow").style.transform = `rotate(0deg)`;
+    document.getElementById("menu-toggle-btn").classList.toggle("open");
+
+    SideBar.style.height = "200vh";
     SideBar.style.width = "0px";
+    
     document.body.style.backgroundImage = "url('https://1drv.ms/i/s!AvASYBEBVN4YhDjJD3VCVolFvvKL?embed=1&width=4608&height=2963')";
     document.body.style.overflowY = "scroll";
     
-    if (document.getElementsByClassName("Parts").length == 0) {
+    if (document.getElementsByClassName("table").length == 0) {
         const Tipos = [
             { nome: "Armazenamento" },
             { nome: "Cooler" },
@@ -364,11 +377,10 @@ function NovaBuild() {
         let mainTable = createTiposTable();
         let perifericosTable = createPerifericosTable();
         let somaTable = createSomaTable();
-        
+
         document.body.appendChild(mainTable);
         document.body.appendChild(perifericosTable);
         document.body.appendChild(somaTable);
-                
     }
 }
 
