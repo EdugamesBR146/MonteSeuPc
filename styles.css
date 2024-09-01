@@ -135,6 +135,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .table {
+  margin-top : 70px;
   width: 100%;
   border: 1px solid #EEEEEE;
   border-collapse: separate;
@@ -152,16 +153,18 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   width: 100%;
   padding: 12px 0;
-  background: #FFFFFF; /* Ensure default background is white or any desired color */
+  background: #FFFFFF; 
 }
 
 .table-row:nth-of-type(odd) {
-  background: #EEEEEE; /* Apply background to odd rows */
+  background: #EEEEEE; 
 }
 
 .table-data, .header__item {
-  flex: 1 1 20%;
-  text-align: center;
+  display: flex;              
+  flex: 1 1 20%;              
+  justify-content: center;   
+  align-items: center;        
 }
 
 .header__item {
@@ -242,4 +245,63 @@ td button:hover {
 td button:active {
   box-shadow: #3c4fe0 0 3px 7px inset;
   transform: translateY(2px);
+}
+
+.plusButton {
+  --plus_sideLength: 2.5rem;
+  --plus_topRightTriangleSideLength: 0.9rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  width: var(--plus_sideLength);
+  height: var(--plus_sideLength);
+  background-color: #000000;
+  overflow: hidden;
+}
+
+.plusButton::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-width: 0 var(--plus_topRightTriangleSideLength) var(--plus_topRightTriangleSideLength) 0;
+  border-style: solid;
+  border-color: transparent white transparent transparent;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.2s;
+}
+
+.plusButton:hover {
+  cursor: pointer;
+}
+
+.plusButton:hover::before {
+  --plus_topRightTriangleSideLength: calc(var(--plus_sideLength) * 2);
+}
+
+.plusButton:focus-visible::before {
+  --plus_topRightTriangleSideLength: calc(var(--plus_sideLength) * 2);
+}
+
+.plusButton>.plusIcon {
+  fill: white;
+  width: calc(var(--plus_sideLength) * 0.7);
+  height: calc(var(--plus_sideLength) * 0.7);
+  z-index: 1;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.2s;
+}
+
+.plusButton:hover>.plusIcon {
+  fill: black;
+  transform: rotate(180deg);
+}
+
+.plusButton:focus-visible>.plusIcon {
+  fill: black;
+  transform: rotate(180deg);
 }
