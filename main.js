@@ -136,122 +136,239 @@ function NovaBuild() {
     
     if (document.getElementsByClassName("Parts").length == 0) {
         const Tipos = [
-            "Armazenamento",
-            "Cooler",
-            "Processador",
-            "Fonte",
-            "Gabinete",
-            "Placa de Vídeo",
-            "Placa Mãe",
-            "Resfriamento",
-            "Memórias RAM",
-            "Controle",
-            "Monitor",
-            "Mouse",
-            "Teclado",
-            "Volante",
+            { nome: "Armazenamento" },
+            { nome: "Cooler" },
+            { nome: "Fonte" },
+            { nome: "Gabinete" },
+            { nome: "Memórias RAM" },
+            { nome: "Placa de Vídeo" },
+            { nome: "Placa Mãe" },
+            { nome: "Processador" },
+            { nome: "Resfriamento" },
         ];
-
-        let MainDiv = document.createElement("DIV");
-        MainDiv.style.height = "100%";
-        MainDiv.style.width = "100%";
-        MainDiv.style.display = "flex";
-        MainDiv.style.alignItems = "flex-start";
-        MainDiv.style.justifyContent = "flex-start";
-        MainDiv.style.paddingTop = "75px";
-        MainDiv.style.position = "absolute";
-        MainDiv.style.left = "0";
-        MainDiv.classList.add("Parts");
-        MainDiv.style.zIndex = "0";
-
-        let Table = document.createElement("DIV");
-        Table.classList.add("table");
-
-        let TableHeader = document.createElement("DIV");
-        TableHeader.classList.add("table-header");
-
-        let HeaderTipo = document.createElement("DIV");
-        HeaderTipo.classList.add("header__item");
-        HeaderTipo.innerHTML = '<a id="tipo" class="filter__link" href="#">Tipo</a>';
-
-        let HeaderAdicionado = document.createElement("DIV");
-        HeaderAdicionado.classList.add("header__item");
-        HeaderAdicionado.innerHTML = '<a id="adicionado" class="filter__link" href="#">Adicionado</a>';
-
-        TableHeader.appendChild(HeaderTipo);
-        TableHeader.appendChild(HeaderAdicionado);
-        Table.appendChild(TableHeader);
-
-        let TableContent = document.createElement("DIV");
-        TableContent.classList.add("table-content");
-
-        Tipos.forEach(tipo => {
+        
+        const Perifericos = [
+            { nome: "Controle" },
+            { nome: "Monitor" },
+            { nome: "Mouse" },
+            { nome: "Teclado" },
+            { nome: "Volante" },
+        ];
+        
+        function createTiposTable() {
+            let mainTable = document.createElement("DIV");
+            mainTable.classList.add("table");
+        
+            let mainTableHeader1 = document.createElement("DIV");
+            mainTableHeader1.classList.add("table-header");
+        
+            let headerPecas = document.createElement("DIV");
+            headerPecas.classList.add("header__item");
+            headerPecas.innerHTML = '<a id="adicionado-tipos" class="filter__link" style="pointer-events: none;">Pecas Principais</a>';
+        
+            mainTableHeader1.appendChild(headerPecas);
+            mainTable.appendChild(mainTableHeader1);
+        
+            let mainTableHeader2 = document.createElement("DIV");
+            mainTableHeader2.classList.add("table-header");
+        
+            let headerTipo = document.createElement("DIV");
+            headerTipo.classList.add("header__item");
+            headerTipo.innerHTML = '<a id="tipo-tipos" class="filter__link" style="pointer-events: none;">Tipo</a>';
+        
+            let headerPreco = document.createElement("DIV");
+            headerPreco.classList.add("header__item");
+            headerPreco.innerHTML = '<a id="preco-tipos" class="filter__link" style="pointer-events: none;">Preço</a>';
+        
+            let headerAdicionado = document.createElement("DIV");
+            headerAdicionado.classList.add("header__item");
+            headerAdicionado.innerHTML = '<a id="adicionado-tipos" class="filter__link" style="pointer-events: none;">Adicionado</a>';
+        
+            mainTableHeader2.appendChild(headerTipo);
+            mainTableHeader2.appendChild(headerPreco);
+            mainTableHeader2.appendChild(headerAdicionado);
+            mainTable.appendChild(mainTableHeader2);
+        
+            let mainTableContent = document.createElement("DIV");
+            mainTableContent.classList.add("table-content");
+        
+            Tipos.forEach(tipo => {
+                let row = document.createElement("DIV");
+                row.classList.add("table-row");
+        
+                let tipoCell = document.createElement("DIV");
+                tipoCell.classList.add("table-data");
+                tipoCell.textContent = tipo.nome;
+                row.appendChild(tipoCell);
+        
+                let precoCell = document.createElement("DIV");
+                precoCell.classList.add("table-data");
+                precoCell.textContent = "—";
+                row.appendChild(precoCell);
+        
+                let adicionadoCell = document.createElement("DIV");
+                adicionadoCell.classList.add("table-data");
+        
+                const plusButton = document.createElement("DIV");
+                plusButton.className = 'plusButton';
+                plusButton.setAttribute('tabindex', '0');
+        
+                const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svgIcon.classList.add("plusIcon");
+                svgIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                svgIcon.setAttribute('viewBox', '0 0 30 30');
+        
+                const gElement = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                gElement.setAttribute('mask', 'url(#mask0_21_345)');
+        
+                const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                pathElement.setAttribute('d', 'M13.75 23.75V16.25H6.25V13.75H13.75V6.25H16.25V13.75H23.75V16.25H16.25V23.75H13.75Z');
+        
+                gElement.appendChild(pathElement);
+                svgIcon.appendChild(gElement);
+        
+                plusButton.appendChild(svgIcon);
+                adicionadoCell.appendChild(plusButton);
+        
+                row.appendChild(adicionadoCell);
+        
+                mainTableContent.appendChild(row);
+            });
+        
+            mainTable.appendChild(mainTableContent);
+            return mainTable;
+        }
+        
+        function createPerifericosTable() {
+            let perifericosTable = document.createElement("DIV");
+            perifericosTable.classList.add("table");
+            perifericosTable.style.marginTop = "30px";
+        
+            let perifericosTableHeader1 = document.createElement("DIV");
+            perifericosTableHeader1.classList.add("table-header");
+        
+            let headerPerifericos = document.createElement("DIV");
+            headerPerifericos.classList.add("header__item");
+            headerPerifericos.innerHTML = '<a id="adicionado-perifericos" class="filter__link" style="pointer-events: none;">Periféricos</a>';
+        
+            perifericosTableHeader1.appendChild(headerPerifericos);
+            perifericosTable.appendChild(perifericosTableHeader1);
+        
+            let perifericosTableHeader2 = document.createElement("DIV");
+            perifericosTableHeader2.classList.add("table-header");
+        
+            let headerTipo = document.createElement("DIV");
+            headerTipo.classList.add("header__item");
+            headerTipo.innerHTML = '<a id="tipo-perifericos" class="filter__link" style="pointer-events: none;">Tipo</a>';
+        
+            let headerPreco = document.createElement("DIV");
+            headerPreco.classList.add("header__item");
+            headerPreco.innerHTML = '<a id="preco-perifericos" class="filter__link" style="pointer-events: none;">Preço</a>';
+        
+            let headerAdicionado = document.createElement("DIV");
+            headerAdicionado.classList.add("header__item");
+            headerAdicionado.innerHTML = '<a id="adicionado-perifericos" class="filter__link" style="pointer-events: none;">Adicionado</a>';
+        
+            perifericosTableHeader2.appendChild(headerTipo);
+            perifericosTableHeader2.appendChild(headerPreco);
+            perifericosTableHeader2.appendChild(headerAdicionado);
+            perifericosTable.appendChild(perifericosTableHeader2);
+        
+            let perifericosTableContent = document.createElement("DIV");
+            perifericosTableContent.classList.add("table-content");
+        
+            Perifericos.forEach(periferico => {
+                let row = document.createElement("DIV");
+                row.classList.add("table-row");
+        
+                let tipoCell = document.createElement("DIV");
+                tipoCell.classList.add("table-data");
+                tipoCell.textContent = periferico.nome;
+                row.appendChild(tipoCell);
+        
+                let precoCell = document.createElement("DIV");
+                precoCell.classList.add("table-data");
+                precoCell.textContent = "—";
+                row.appendChild(precoCell);
+        
+                let adicionadoCell = document.createElement("DIV");
+                adicionadoCell.classList.add("table-data");
+        
+                const plusButton = document.createElement("DIV");
+                plusButton.className = 'plusButton';
+                plusButton.setAttribute('tabindex', '0');
+        
+                const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svgIcon.classList.add("plusIcon");
+                svgIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                svgIcon.setAttribute('viewBox', '0 0 30 30');
+        
+                const gElement = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                gElement.setAttribute('mask', 'url(#mask0_21_345)');
+        
+                const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                pathElement.setAttribute('d', 'M13.75 23.75V16.25H6.25V13.75H13.75V6.25H16.25V13.75H23.75V16.25H16.25V23.75H13.75Z');
+        
+                gElement.appendChild(pathElement);
+                svgIcon.appendChild(gElement);
+        
+                plusButton.appendChild(svgIcon);
+                adicionadoCell.appendChild(plusButton);
+        
+                row.appendChild(adicionadoCell);
+        
+                perifericosTableContent.appendChild(row);
+            });
+        
+            perifericosTable.appendChild(perifericosTableContent);
+            return perifericosTable;
+        }
+        
+        function createSomaTable() {
+            let somaTable = document.createElement("DIV");
+            somaTable.classList.add("table");
+            somaTable.style.marginTop = "30px"; 
+        
+            let somaTableHeader = document.createElement("DIV");
+            somaTableHeader.classList.add("table-header");
+        
+            let headerSoma = document.createElement("DIV");
+            headerSoma.classList.add("header__item");
+            headerSoma.innerHTML = '<a id="soma" class="filter__link" style="pointer-events: none;">Total</a>';
+        
+            somaTableHeader.appendChild(headerSoma);
+            somaTable.appendChild(somaTableHeader);
+        
+            let somaTableContent = document.createElement("DIV");
+            somaTableContent.classList.add("table-content");
+        
             let row = document.createElement("DIV");
             row.classList.add("table-row");
-
+        
             let tipoCell = document.createElement("DIV");
             tipoCell.classList.add("table-data");
-            tipoCell.textContent = tipo;
+            tipoCell.textContent = "Total";
             row.appendChild(tipoCell);
-
-            let adicionadoCell = document.createElement("DIV");
-            adicionadoCell.classList.add("table-data");
-            
-            let button = document.createElement("BUTTON");
-            adicionadoCell.appendChild(button);
-
-            row.appendChild(adicionadoCell);
-
-            TableContent.appendChild(row);
-        });
-
-        Table.appendChild(TableContent);
-        MainDiv.appendChild(Table);
-        document.body.appendChild(MainDiv);
-
-        const properties = ['tipo', 'adicionado'];
-
-        $.each(properties, function (i, val) {
-            let orderClass = '';
-
-            $("#" + val).click(function (e) {
-                e.preventDefault();
-                $('.filter__link.filter__link--active').not(this).removeClass('filter__link--active');
-                $(this).toggleClass('filter__link--active');
-                $('.filter__link').removeClass('asc desc');
-
-                if (orderClass == 'desc' || orderClass == '') {
-                    $(this).addClass('asc');
-                    orderClass = 'asc';
-                } else {
-                    $(this).addClass('desc');
-                    orderClass = 'desc';
-                }
-
-                const parent = $(this).closest('.header__item');
-                const index = $(".header__item").index(parent);
-                const table = $('.table-content');
-                const rows = table.find('.table-row').get();
-                const isSelected = $(this).hasClass('filter__link--active');
-
-                rows.sort(function (a, b) {
-                    const x = $(a).find('.table-data').eq(index).text();
-                    const y = $(b).find('.table-data').eq(index).text();
-
-                    if (isSelected) {
-                        return x.localeCompare(y);
-                    } else {
-                        return y.localeCompare(x);
-                    }
-                });
-
-                $.each(rows, function (index, row) {
-                    table.append(row);
-                });
-
-                return false;
-            });
-        });
+        
+            let precoCell = document.createElement("DIV");
+            precoCell.classList.add("table-data");
+            precoCell.textContent = "—"; 
+            row.appendChild(precoCell);
+        
+            somaTableContent.appendChild(row);
+        
+            somaTable.appendChild(somaTableContent);
+            return somaTable;
+        }
+        
+        let mainTable = createTiposTable();
+        let perifericosTable = createPerifericosTable();
+        let somaTable = createSomaTable();
+        
+        document.body.appendChild(mainTable);
+        document.body.appendChild(perifericosTable);
+        document.body.appendChild(somaTable);
+                
     }
 }
 
