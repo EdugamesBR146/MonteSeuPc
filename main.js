@@ -141,7 +141,6 @@ function NovaBuild() {
             "Placa Mãe",
             "Resfriamento",
             "Memórias RAM",
-            "Periféricos",
             "Controle",
             "Monitor",
             "Mouse",
