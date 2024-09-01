@@ -157,7 +157,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .table-row:nth-of-type(odd) {
-  background: #EEEEEE; 
+  background: #cfcfcf; 
 }
 
 .table-data, .header__item {
