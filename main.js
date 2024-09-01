@@ -37,16 +37,40 @@ async function fetchData(url) {
 async function loadParts() {
     const PARTS = {
         AMDCPUS: await fetchData('https://raw.githubusercontent.com/zymos/cpu-db/master/cpu-db.AMD.csv'),
+        CONTROLLERS: await fetchData('https://raw.githubusercontent.com/mdqinc/SDL_GameControllerDB/master/gamecontrollerdb.txt'),
         GPUS: await fetchData('https://raw.githubusercontent.com/voidful/gpu-info-api/gpu-data/gpu.json'),
         INTELCPUS: await fetchData('https://raw.githubusercontent.com/divinity76/intel-cpu-database/master/databases/intel_cpu_database.json'),
         MOBOS: await fetchData('https://raw.githubusercontent.com/JaJabinko/data/master/motherboard.json'),
     };
 
-    console.log(PARTS);
+    const controllers = parseControllerData(PARTS.CONTROLLERS);
+
+    console.log(controllers);
 }
 
-function populateHeader(data) {
-    console.log(data);
+function parseControllerData(data) {
+    const lines = data.split('\n');
+
+    const controllerLines = lines.filter(line => line && !line.startsWith('#'));
+
+    const controllers = controllerLines.map(line => {
+        const [guid, name, ...mappings] = line.split(',');
+
+        const controller = {
+            guid,
+            name,
+            mappings: {}
+        };
+
+        mappings.forEach(mapping => {
+            const [key, value] = mapping.split(':');
+            controller.mappings[key] = value;
+        });
+
+        return controller;
+    });
+
+    return controllers;
 }
 
 async function DropDown() {
@@ -59,6 +83,14 @@ async function DropDown() {
         Mobile = true;
     } else {
         Mobile = false;
+    }
+
+    if (document.body.style.backgroundImage == null || document.body.style.backgroundImage == "") {
+        document.body.style.backgroundImage = "url('https://1drv.ms/i/s!AvASYBEBVN4YhDeYsTGhHgbzpYHK?embed=1&width=1792&height=1024')";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundPosition = "center center";
+        document.body.style.backgroundRepeat = "no-repeat";
+        document.body.style.backgroundAttachment = "fixed";
     }
 
     setTimeout(() => {
@@ -381,6 +413,39 @@ function NovaBuild() {
         document.body.appendChild(mainTable);
         document.body.appendChild(perifericosTable);
         document.body.appendChild(somaTable);
+
+        Array.from(document.getElementsByClassName("plusButton")).forEach(button => {
+            let Id;
+            
+            function findParentWithClass(element, targetClass) {
+                let parentElement = element.parentElement; 
+              
+                while (parentElement) {
+                  if (parentElement.classList && parentElement.classList.contains(targetClass)) {
+                    return parentElement; 
+                  }
+                  parentElement = parentElement.parentElement; 
+                }
+              
+                return null;
+            }
+
+            let TableRow = findParentWithClass(button, "table-row");
+
+            if (TableRow) {
+                Array.from(TableRow.children).forEach(tableData => {
+                    if (tableData.innerHTML != "" && tableData.innerHTML != "—") {
+                        Id = tableData.innerHTML;
+
+                        button.id = Id;
+                    }
+                });
+            }
+
+            button.onclick = function() {
+                
+            }
+        });
     }
 }
 
