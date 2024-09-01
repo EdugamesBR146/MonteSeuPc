@@ -62,6 +62,10 @@ async function DropDown() {
     }
 
     setTimeout(() => {
+        if (Mobile == true) {
+            TopBar.style.justifyContent = "center";
+        }
+
         for (let i = 0; i < TopBar.children.length; i++) {
             if (TopBar.children[i].tagName == "BUTTON") {
                 document.getElementById("ArrowImage").style.opacity = 1;
