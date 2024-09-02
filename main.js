@@ -434,16 +434,34 @@ function NovaBuild() {
 
             if (TableRow) {
                 Array.from(TableRow.children).forEach(tableData => {
-                    if (tableData.innerHTML != "" && tableData.innerHTML != "—") {
-                        Id = tableData.innerHTML;
-
+                    if ($(tableData).text() !== "" && $(tableData).text() !== "—") {
+                        Id = $(tableData).text();
+                        
                         button.id = Id;
-                    }
+                    }                    
                 });
             }
 
             button.onclick = function() {
-                
+                const newDiv = document.createElement('div');
+                newDiv.textContent = 'This is a new div!'; 
+        
+                newDiv.style.position = 'fixed'; 
+                newDiv.style.top = '0';
+                newDiv.style.left = '0';
+                newDiv.style.width = '100vw'; 
+                newDiv.style.height = '100vh'; 
+                newDiv.style.backgroundColor = 'rgba(173, 216, 230, 0.9)'; 
+                newDiv.style.zIndex = '0'; 
+                newDiv.style.display = 'flex'; 
+                newDiv.style.justifyContent = 'center';
+                newDiv.style.alignItems = 'center';
+                newDiv.style.fontFamily = 'Arial, sans-serif';
+                newDiv.style.color = '#333';
+        
+                newDiv.classList.add("table");
+
+                document.body.appendChild(newDiv);
             }
         });
     }
