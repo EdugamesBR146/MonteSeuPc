@@ -445,126 +445,220 @@ function NovaBuild() {
             button.onclick = function() {
                 document.body.style.overflowY = "hidden";
                 
-                const newDiv = document.createElement('div');
-                newDiv.style.position = 'fixed';
-                newDiv.style.top = '0';
-                newDiv.style.left = '0';
-                newDiv.style.width = '100vw';
-                newDiv.style.height = '100vh';
-                newDiv.style.backgroundColor = 'rgba(173, 216, 230, 0.9)';
-                newDiv.style.zIndex = '0';
-                newDiv.style.display = 'flex';
-                newDiv.style.flexDirection = 'column'; 
-                newDiv.style.fontFamily = 'Arial, sans-serif';
-                newDiv.style.color = '#333';
+                function createMainDiv() {
+                    const newDiv = document.createElement('div');
+                    newDiv.style.position = 'fixed';
+                    newDiv.style.top = '0';
+                    newDiv.style.left = '0';
+                    newDiv.style.width = '100vw';
+                    newDiv.style.height = '100vh';
+                    newDiv.style.backgroundColor = 'rgba(173, 216, 230, 0.9)';
+                    newDiv.style.zIndex = '0';
+                    newDiv.style.display = 'flex';
+                    newDiv.style.flexDirection = 'column';
+                    newDiv.style.fontFamily = 'Arial, sans-serif';
+                    newDiv.style.color = '#333';
+                    newDiv.classList.add("table");
 
-                const form = document.createElement('form');
-                form.className = 'form';
-                form.style.position = 'relative'; 
-                form.style.zIndex = '1'; 
-                form.style.padding = '1px'; 
-                form.style.marginTop = '150px';
-
-                const button1 = document.createElement('button');
-                const svg1 = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                svg1.setAttribute('width', '17');
-                svg1.setAttribute('height', '16');
-                svg1.setAttribute('fill', 'none');
-                svg1.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-                svg1.setAttribute('role', 'img');
-                svg1.setAttribute('aria-labelledby', 'search');
-                const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                path1.setAttribute('d', 'M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9');
-                path1.setAttribute('stroke', 'currentColor');
-                path1.setAttribute('stroke-width', '1.333');
-                path1.setAttribute('stroke-linecap', 'round');
-                path1.setAttribute('stroke-linejoin', 'round');
-                svg1.appendChild(path1);
-                button1.appendChild(svg1);
-                form.appendChild(button1);
-
-                const input = document.createElement('input');
-                input.className = 'input';
-                input.setAttribute('placeholder', 'Digite seu texto aqui...');
-                input.setAttribute('required', '');
-                input.setAttribute('type', 'text');
-                form.appendChild(input);
-
-                const button2 = document.createElement('button');
-                button2.setAttribute('type', 'button');
-                const svg2 = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                svg2.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-                svg2.setAttribute('class', 'h-6 w-6');
-                svg2.setAttribute('fill', 'none');
-                svg2.setAttribute('viewBox', '0 0 24 24');
-                svg2.setAttribute('stroke', 'currentColor');
-                svg2.setAttribute('stroke-width', '2');
-                const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                path2.setAttribute('stroke-linecap', 'round');
-                path2.setAttribute('stroke-linejoin', 'round');
-                path2.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-                svg2.appendChild(path2);
-                button2.appendChild(svg2);
-                form.appendChild(button2);
-
-                const itemsDiv = document.createElement('div');
-                itemsDiv.style.flex = '1'; 
-                itemsDiv.style.overflow = 'auto'; 
-                itemsDiv.style.backgroundColor = 'white';
-                itemsDiv.style.zIndex = '0'; 
-                itemsDiv.style.width = '100%'; 
-                itemsDiv.style.maxHeight = '80vh';
-                itemsDiv.style.maxWidth = '80vw'; 
-                itemsDiv.style.margin = 'auto'; 
-                itemsDiv.style.display = 'flex';
-                itemsDiv.style.flexWrap = 'wrap'; 
-                itemsDiv.style.marginTop = '50px';
-                itemsDiv.style.alignContent = 'center';
-                itemsDiv.style.alignItems = 'center';
-                itemsDiv.style.justifyContent = 'space-between';
-                itemsDiv.style.padding = '10px 0';
-                itemsDiv.style.gap = '20px';
-
-                const svgNS = "http://www.w3.org/2000/svg";
-
-                const svg = document.createElementNS(svgNS, "svg");
-                svg.setAttribute("width", "50");
-                svg.setAttribute("height", "50");
-                svg.setAttribute("fill", "currentColor");
-                svg.setAttribute("class", "bi bi-x-circle");
-                svg.setAttribute("viewBox", "0 0 16 16");
-                
-                const path3 = document.createElementNS(svgNS, "path");
-                path1.setAttribute("d", "M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16");
-                
-                const path4 = document.createElementNS(svgNS, "path");
-                path2.setAttribute("d", "M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708");
-                
-                svg.appendChild(path3);
-                svg.appendChild(path4);
-                
-                newDiv.appendChild(svg);
-
-                for (let i = 0; i < 14; i++) {
-                    const cardDiv = document.createElement('div');
-                    cardDiv.classList.add('card');
-                    
-                    const imgBox = document.createElement('div');
-                    imgBox.classList.add('imgBox');
-                    
-                    const img = document.createElement('img');
-                    img.setAttribute('src', 'https://1drv.ms/i/s!AvASYBEBVN4YhDvnpknuuOqjFdzP?embed=1&width=256');
-                    img.classList.add('product');
-
-                    imgBox.appendChild(img);
-
-                    cardDiv.appendChild(imgBox);
-
-                    itemsDiv.appendChild(cardDiv);
+                    return newDiv;
                 }
 
+                function createForm() {
+                    const form = document.createElement('form');
+                    form.className = 'form';
+                    form.style.position = 'relative';
+                    form.style.zIndex = '1';
+                    form.style.padding = '1px';
+                    form.style.marginTop = '150px';
+
+                    const button1 = document.createElement('button');
+                    const svg1 = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    svg1.setAttribute('width', '17');
+                    svg1.setAttribute('height', '16');
+                    svg1.setAttribute('fill', 'none');
+                    svg1.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                    svg1.setAttribute('role', 'img');
+                    svg1.setAttribute('aria-labelledby', 'search');
+                    const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path1.setAttribute('d', 'M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9');
+                    path1.setAttribute('stroke', 'currentColor');
+                    path1.setAttribute('stroke-width', '1.333');
+                    path1.setAttribute('stroke-linecap', 'round');
+                    path1.setAttribute('stroke-linejoin', 'round');
+                    svg1.appendChild(path1);
+                    button1.appendChild(svg1);
+                    form.appendChild(button1);
+
+                    const input = document.createElement('input');
+                    input.className = 'input';
+                    input.setAttribute('placeholder', 'Digite seu texto aqui...');
+                    input.setAttribute('required', '');
+                    input.setAttribute('type', 'text');
+                    form.appendChild(input);
+
+                    const button2 = document.createElement('button');
+                    button2.setAttribute('type', 'button');
+                    const svg2 = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    svg2.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                    svg2.setAttribute('class', 'h-6 w-6');
+                    svg2.setAttribute('fill', 'none');
+                    svg2.setAttribute('viewBox', '0 0 24 24');
+                    svg2.setAttribute('stroke', 'currentColor');
+                    svg2.setAttribute('stroke-width', '2');
+                    const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path2.setAttribute('stroke-linecap', 'round');
+                    path2.setAttribute('stroke-linejoin', 'round');
+                    path2.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                    svg2.appendChild(path2);
+                    button2.appendChild(svg2);
+                    form.appendChild(button2);
+
+                    return { form, button2 };;
+                }
+
+                function createItemsDiv() {
+                    const itemsDiv = document.createElement('div');
+                    itemsDiv.style.flex = '1';
+                    itemsDiv.style.overflow = 'auto';
+                    itemsDiv.style.backgroundColor = 'white';
+                    itemsDiv.style.zIndex = '0';
+                    itemsDiv.style.width = '100%';
+                    itemsDiv.style.maxHeight = '80vh';
+                    itemsDiv.style.maxWidth = '80vw';
+                    itemsDiv.style.margin = 'auto';
+                    itemsDiv.style.display = 'flex';
+                    itemsDiv.style.flexWrap = 'wrap';
+                    itemsDiv.style.marginTop = '50px';
+                    itemsDiv.style.alignContent = 'center';
+                    itemsDiv.style.alignItems = 'center';
+                    itemsDiv.style.justifyContent = 'space-between';
+                    itemsDiv.style.padding = '10px 0';
+                    itemsDiv.style.rowGap = '20px';
+
+                    const svgNS = "http://www.w3.org/2000/svg";
+
+                    for (let i = 0; i < 14; i++) {
+                        const cardDiv = document.createElement('div');
+                        cardDiv.classList.add('card');
+
+                        const imgBox = document.createElement('div');
+                        imgBox.classList.add('imgBox');
+
+                        const img = document.createElement('img');
+                        img.setAttribute('src', 'https://1drv.ms/i/s!AvASYBEBVN4YhDvnpknuuOqjFdzP?embed=1&width=256');
+                        img.classList.add('product');
+
+                        imgBox.appendChild(img);
+
+                        cardDiv.appendChild(imgBox);
+
+                        itemsDiv.appendChild(cardDiv);
+                    }
+
+                    return itemsDiv;
+                }
+
+                function createButtonWithTextAndSpans() {
+                    const button = document.createElement("BUTTON");
+                    button.type = "button";
+                    button.classList.add(
+                        "relative",
+                        "border-2",
+                        "border-black",
+                        "group",
+                        "hover:border-green-500",
+                        "w-12",
+                        "h-12",
+                        "duration-500",
+                        "overflow-hidden"
+                    );
+                
+                    const text = document.createElement("p");
+                    text.textContent = "×";
+                    text.classList.add(
+                        "font-Manrope",
+                        "text-3xl",
+                        "h-full",
+                        "w-full",
+                        "flex",
+                        "items-center",
+                        "justify-center",
+                        "text-black",
+                        "duration-500",
+                        "relative",
+                        "z-10",
+                        "group-hover:scale-0"
+                    );
+                
+                    const span1 = document.createElement("span");
+                    span1.classList.add(
+                        "absolute",
+                        "w-full",
+                        "h-full",
+                        "bg-green-500",
+                        "rotate-45",
+                        "group-hover:top-9",
+                        "duration-500",
+                        "top-12",
+                        "left-0"
+                    );
+                
+                    const span2 = document.createElement("span");
+                    span2.classList.add(
+                        "absolute",
+                        "w-full",
+                        "h-full",
+                        "bg-green-500",
+                        "rotate-45",
+                        "top-0",
+                        "group-hover:left-9",
+                        "duration-500",
+                        "left-12"
+                    );
+                
+                    const span3 = document.createElement("span");
+                    span3.classList.add(
+                        "absolute",
+                        "w-full",
+                        "h-full",
+                        "bg-green-500",
+                        "rotate-45",
+                        "top-0",
+                        "group-hover:right-9",
+                        "duration-500",
+                        "right-12"
+                    );
+                
+                    const span4 = document.createElement("span");
+                    span4.classList.add(
+                        "absolute",
+                        "w-full",
+                        "h-full",
+                        "bg-green-500",
+                        "rotate-45",
+                        "group-hover:bottom-9",
+                        "duration-500",
+                        "bottom-12",
+                        "right-0"
+                    );
+                
+                    button.appendChild(text);
+                    button.appendChild(span1);
+                    button.appendChild(span2);
+                    button.appendChild(span3);
+                    button.appendChild(span4);
+                
+                    return button;
+                }                
+                
+                const btn = createButtonWithTextAndSpans();
+                const { form, button2 } = createForm();
+                const itemsDiv = createItemsDiv();
+                const newDiv = createMainDiv();
+
+                newDiv.appendChild(btn);
                 newDiv.appendChild(form);
-                newDiv.appendChild(itemsDiv);
+                newDiv.appendChild(itemsDiv);   
 
                 document.body.appendChild(newDiv);
 
