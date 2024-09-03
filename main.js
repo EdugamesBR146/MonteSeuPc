@@ -13,11 +13,11 @@ function ReturnDesiredElement(father, type) {
     }
 }
 
-async function fetchData(url) {
+async function FetchData(url) {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`Erro de HTTP! Status: ${response.status}`);
         }
 
         const contentType = response.headers.get('content-type');
@@ -27,20 +27,20 @@ async function fetchData(url) {
         } else if (contentType.includes('text/csv') || contentType.includes('text/plain')) {
             return await response.text();
         } else {
-            throw new Error('Unsupported content type: ' + contentType);
+            throw new Error('Formato de content type não suportado: ' + contentType);
         }
     } catch (error) {
-        console.error(`Failed to fetch data from ${url}: ${error}`);
+        console.error(`Falha de dar fetch na data vinda de: ${url}: ${error}`);
     }
 }
 
-async function loadParts() {
+async function LoadParts() {
     const PARTS = {
-        AMDCPUS: await fetchData('https://raw.githubusercontent.com/zymos/cpu-db/master/cpu-db.AMD.csv'),
-        CONTROLLERS: await fetchData('https://raw.githubusercontent.com/mdqinc/SDL_GameControllerDB/master/gamecontrollerdb.txt'),
-        GPUS: await fetchData('https://raw.githubusercontent.com/voidful/gpu-info-api/gpu-data/gpu.json'),
-        INTELCPUS: await fetchData('https://raw.githubusercontent.com/divinity76/intel-cpu-database/master/databases/intel_cpu_database.json'),
-        MOBOS: await fetchData('https://raw.githubusercontent.com/JaJabinko/data/master/motherboard.json'),
+        AMDCPUS: await FetchData('https://raw.githubusercontent.com/zymos/cpu-db/master/cpu-db.AMD.csv'),
+        CONTROLLERS: await FetchData('https://raw.githubusercontent.com/mdqinc/SDL_GameControllerDB/master/gamecontrollerdb.txt'),
+        GPUS: await FetchData('https://raw.githubusercontent.com/voidful/gpu-info-api/gpu-data/gpu.json'),
+        INTELCPUS: await FetchData('https://raw.githubusercontent.com/divinity76/intel-cpu-database/master/databases/intel_cpu_database.json'),
+        MOBOS: await FetchData('https://raw.githubusercontent.com/JaJabinko/data/master/motherboard.json'),
     };
 
     const controllers = parseControllerData(PARTS.CONTROLLERS);
@@ -200,7 +200,7 @@ function NovaBuild() {
             { nome: "Volante" },
         ];
         
-        function createTiposTable() {
+        function CriarTiposTable() {
             let mainTable = document.createElement("DIV");
             mainTable.classList.add("table");
         
@@ -284,7 +284,7 @@ function NovaBuild() {
             return mainTable;
         }
         
-        function createPerifericosTable() {
+        function CriarPerifericosTable() {
             let perifericosTable = document.createElement("DIV");
             perifericosTable.classList.add("table");
             perifericosTable.style.marginTop = "30px";
@@ -369,7 +369,7 @@ function NovaBuild() {
             return perifericosTable;
         }
         
-        function createSomaTable() {
+        function CriarSomaTable() {
             let somaTable = document.createElement("DIV");
             somaTable.classList.add("table");
             somaTable.style.marginTop = "30px"; 
@@ -406,9 +406,9 @@ function NovaBuild() {
             return somaTable;
         }
         
-        let mainTable = createTiposTable();
-        let perifericosTable = createPerifericosTable();
-        let somaTable = createSomaTable();
+        let mainTable = CriarTiposTable();
+        let perifericosTable = CriarPerifericosTable();
+        let somaTable = CriarSomaTable();
 
         document.body.appendChild(mainTable);
         document.body.appendChild(perifericosTable);
@@ -445,7 +445,7 @@ function NovaBuild() {
             button.onclick = function() {
                 document.body.style.overflowY = "hidden";
                 
-                function createMainDiv() {
+                function CriarMainDiv() {
                     const newDiv = document.createElement('div');
                     newDiv.style.position = 'fixed';
                     newDiv.style.top = '0';
@@ -463,13 +463,13 @@ function NovaBuild() {
                     return newDiv;
                 }
 
-                function createForm() {
+                function CriarForm() {
                     const form = document.createElement('form');
                     form.className = 'form';
                     form.style.position = 'relative';
                     form.style.zIndex = '1';
                     form.style.padding = '1px';
-                    form.style.marginTop = '150px';
+                    form.style.marginBottom = '45px';
 
                     const button1 = document.createElement('button');
                     const svg1 = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -513,31 +513,46 @@ function NovaBuild() {
                     button2.appendChild(svg2);
                     form.appendChild(button2);
 
-                    return { form, button2 };;
+                    return { form, button2, input };;
                 }
 
-                function createItemsDiv() {
+                function CriarItemsDiv() {
                     const itemsDiv = document.createElement('div');
                     itemsDiv.style.flex = '1';
-                    itemsDiv.style.overflow = 'auto';
+                    itemsDiv.style.overflowY = 'scroll';
                     itemsDiv.style.backgroundColor = 'white';
                     itemsDiv.style.zIndex = '0';
                     itemsDiv.style.width = '100%';
                     itemsDiv.style.maxHeight = '80vh';
                     itemsDiv.style.maxWidth = '80vw';
-                    itemsDiv.style.margin = 'auto';
+                    itemsDiv.style.marginLeft = 'auto';
+                    itemsDiv.style.marginRight = 'auto';
                     itemsDiv.style.display = 'flex';
                     itemsDiv.style.flexWrap = 'wrap';
-                    itemsDiv.style.marginTop = '50px';
-                    itemsDiv.style.alignContent = 'center';
-                    itemsDiv.style.alignItems = 'center';
+                    itemsDiv.style.alignContent = 'flex-start';
+                    itemsDiv.style.alignItems = 'flex-start';
                     itemsDiv.style.justifyContent = 'space-between';
-                    itemsDiv.style.padding = '10px 0';
                     itemsDiv.style.rowGap = '20px';
-
+                    itemsDiv.style.columnGap = '20px';
+                    
                     const svgNS = "http://www.w3.org/2000/svg";
 
-                    for (let i = 0; i < 14; i++) {
+                    return itemsDiv;
+                }
+
+                function CriarCards(itemsDiv) {
+                    const itemsDivWidth = itemsDiv.clientWidth;
+                    const itemsDivHeight = itemsDiv.clientHeight;
+
+                    const itemWidth = 150; 
+                    const itemHeight = 150; 
+                    
+                    const itemsPerRow = Math.floor(itemsDivWidth / (itemWidth + 20)); 
+                    const rows = Math.floor(itemsDivHeight / (itemHeight + 20));
+                    
+                    const totalItems = itemsPerRow * rows;
+
+                    for (let i = 0; i < totalItems; i++) {
                         const cardDiv = document.createElement('div');
                         cardDiv.classList.add('card');
 
@@ -554,11 +569,9 @@ function NovaBuild() {
 
                         itemsDiv.appendChild(cardDiv);
                     }
-
-                    return itemsDiv;
                 }
 
-                function createButtonWithTextAndSpans() {
+                function CriarButtonWithTextAndSpans() {
                     const button = document.createElement("BUTTON");
                     button.type = "button";
                     button.classList.add(
@@ -651,16 +664,18 @@ function NovaBuild() {
                     return button;
                 }                
                 
-                const btn = createButtonWithTextAndSpans();
-                const { form, button2 } = createForm();
-                const itemsDiv = createItemsDiv();
-                const newDiv = createMainDiv();
+                const btn = CriarButtonWithTextAndSpans();
+                const { form, button2, input } = CriarForm();
+                const itemsDiv = CriarItemsDiv();
+                const newDiv = CriarMainDiv();
 
                 newDiv.appendChild(btn);
                 newDiv.appendChild(form);
                 newDiv.appendChild(itemsDiv);   
 
                 document.body.appendChild(newDiv);
+
+                CriarCards(itemsDiv);
 
                 button2.addEventListener('click', function () {
                     input.value = '';
@@ -675,6 +690,6 @@ function NovaBuild() {
     }
 }
 
-loadParts();
+LoadParts();
 
 window.onload = DropDown;
