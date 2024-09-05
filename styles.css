@@ -127,6 +127,14 @@ h1, h2, h3, h4, h5, h6 {
   border-spacing: 0 24px; 
 }
 
+.table2 {
+  margin-top : 70px;
+  width: 100%;
+  border: 1px solid #EEEEEE;
+  border-collapse: separate;
+  border-spacing: 0 24px; 
+}
+
 .table-header {
   display: flex;
   width: 100%;
@@ -492,4 +500,67 @@ input:focus {
 .product {
   height: 300px;
   width: auto;
+}
+
+.close-button {
+  display: block;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.close-button > div {
+  position: relative;
+}
+.close-button-block {
+  width: 40px;
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.close-button-block:before, .close-button-block:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: calc(55% - 4px);
+  display: block;
+  width: 4px;
+  height: 25px;
+  transform-origin: bottom center;
+  background: white;
+  transition: all ease-out 280ms;
+}
+.close-button-block:last-of-type {
+  transform: rotate(180deg);
+}
+.close-button .in .close-button-block:before {
+  transition-delay: 280ms;
+  transform: translateX(20px) translateY(-20px) rotate(45deg);
+}
+.close-button .in .close-button-block:after {
+  transition-delay: 280ms;
+  transform: translateX(-22px) translateY(-22px) rotate(-45deg);
+}
+.close-button .out {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.close-button .out .close-button-block:before {
+  transform: translateX(-5px) translateY(5px) rotate(45deg);
+}
+.close-button .out .close-button-block:after {
+  transform: translateX(5px) translateY(5px) rotate(-45deg);
+}
+.close-button:hover .in .close-button-block:before {
+  transform: translateX(-5px) translateY(5px) rotate(45deg);
+}
+.close-button:hover .in .close-button-block:after {
+  transform: translateX(5px) translateY(5px) rotate(-45deg);
+}
+.close-button:hover .out .close-button-block:before {
+  transform: translateX(-20px) translateY(20px) rotate(45deg);
+}
+.close-button:hover .out .close-button-block:after {
+  transform: translateX(20px) translateY(20px) rotate(-45deg);
 }
