@@ -170,6 +170,8 @@ function Home() {
 }
 
 function CloseParts() {
+    document.body.style.overflowY = 'scroll';
+
     Array.from(document.getElementsByClassName("table2")).forEach(element =>{
         element.remove();
     });
