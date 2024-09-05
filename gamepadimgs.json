@@ -1,0 +1,89 @@
+{
+  "controllers": [
+    {
+      "brand": "Machenike",
+      "models": [
+        {
+          "name": "G5 Pro Elite",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "180-250 BRL"
+        },
+        {
+          "name": "G6 Pro Elite",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "220-300 BRL"
+        }
+      ]
+    },
+    {
+      "brand": "8bitdo",
+      "models": [
+        {
+          "name": "Ultimate C",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "200-280 BRL"
+        }
+      ]
+    },
+    {
+      "brand": "Gamesir",
+      "models": [
+        {
+          "name": "Gamesir X2",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "150-220 BRL"
+        },
+        {
+          "name": "T4",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "130-200 BRL"
+        },
+        {
+          "name": "Nova Lite",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "100-180 BRL"
+        },
+        {
+          "name": "Cyclone Pro",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "180-250 BRL"
+        }
+      ]
+    },
+    {
+      "brand": "Vader",
+      "models": [
+        {
+          "name": "Vader 3 Pro",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "240-320 BRL"
+        },
+        {
+          "name": "Vader 4",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "280-350 BRL"
+        },
+        {
+          "name": "Vader 4 Pro",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "300-380 BRL"
+        }
+      ]
+    },
+    {
+      "brand": "Flydigi",
+      "models": [
+        {
+          "name": "Apex 4",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "260-340 BRL"
+        },
+        {
+          "name": "Direwolf 2",
+          "image": "https://via.placeholder.com/150",
+          "priceRange": "200-280 BRL"
+        }
+      ]
+    }
+  ]
+}
