@@ -38,6 +38,7 @@ async function LoadParts() {
     const PARTS = {
         AMDCPUS: await FetchData('https://raw.githubusercontent.com/zymos/cpu-db/master/cpu-db.AMD.csv'),
         CONTROLLERS: await FetchData('https://raw.githubusercontent.com/mdqinc/SDL_GameControllerDB/master/gamecontrollerdb.txt'),
+        GAMEPADIMGS: await FetchData('https://raw.githubusercontent.com/EdugamesBR146/GamepadImages/main/gamepadimgs.json'),
         GPUS: await FetchData('https://raw.githubusercontent.com/voidful/gpu-info-api/gpu-data/gpu.json'),
         INTELCPUS: await FetchData('https://raw.githubusercontent.com/divinity76/intel-cpu-database/master/databases/intel_cpu_database.json'),
         MOBOS: await FetchData('https://raw.githubusercontent.com/JaJabinko/data/master/motherboard.json'),
@@ -168,6 +169,12 @@ function Home() {
     
 }
 
+function CloseParts() {
+    Array.from(document.getElementsByClassName("table2")).forEach(element =>{
+        element.remove();
+    });
+}
+
 function NovaBuild() {
     Active = false;
 
@@ -287,8 +294,7 @@ function NovaBuild() {
         function CriarPerifericosTable() {
             let perifericosTable = document.createElement("DIV");
             perifericosTable.classList.add("table");
-            perifericosTable.style.marginTop = "30px";
-        
+            
             let perifericosTableHeader1 = document.createElement("DIV");
             perifericosTableHeader1.classList.add("table-header");
         
@@ -372,8 +378,7 @@ function NovaBuild() {
         function CriarSomaTable() {
             let somaTable = document.createElement("DIV");
             somaTable.classList.add("table");
-            somaTable.style.marginTop = "30px"; 
-        
+            
             let somaTableHeader = document.createElement("DIV");
             somaTableHeader.classList.add("table-header");
         
@@ -458,7 +463,7 @@ function NovaBuild() {
                     newDiv.style.flexDirection = 'column';
                     newDiv.style.fontFamily = 'Arial, sans-serif';
                     newDiv.style.color = '#333';
-                    newDiv.classList.add("table");
+                    newDiv.classList.add("table2");
 
                     return newDiv;
                 }
@@ -572,96 +577,32 @@ function NovaBuild() {
                 }
 
                 function CriarButtonWithTextAndSpans() {
-                    const button = document.createElement("BUTTON");
-                    button.type = "button";
-                    button.classList.add(
-                        "relative",
-                        "border-2",
-                        "border-black",
-                        "group",
-                        "hover:border-green-500",
-                        "w-12",
-                        "h-12",
-                        "duration-500",
-                        "overflow-hidden"
-                    );
-                
-                    const text = document.createElement("p");
-                    text.textContent = "×";
-                    text.classList.add(
-                        "font-Manrope",
-                        "text-3xl",
-                        "h-full",
-                        "w-full",
-                        "flex",
-                        "items-center",
-                        "justify-center",
-                        "text-black",
-                        "duration-500",
-                        "relative",
-                        "z-10",
-                        "group-hover:scale-0"
-                    );
-                
-                    const span1 = document.createElement("span");
-                    span1.classList.add(
-                        "absolute",
-                        "w-full",
-                        "h-full",
-                        "bg-green-500",
-                        "rotate-45",
-                        "group-hover:top-9",
-                        "duration-500",
-                        "top-12",
-                        "left-0"
-                    );
-                
-                    const span2 = document.createElement("span");
-                    span2.classList.add(
-                        "absolute",
-                        "w-full",
-                        "h-full",
-                        "bg-green-500",
-                        "rotate-45",
-                        "top-0",
-                        "group-hover:left-9",
-                        "duration-500",
-                        "left-12"
-                    );
-                
-                    const span3 = document.createElement("span");
-                    span3.classList.add(
-                        "absolute",
-                        "w-full",
-                        "h-full",
-                        "bg-green-500",
-                        "rotate-45",
-                        "top-0",
-                        "group-hover:right-9",
-                        "duration-500",
-                        "right-12"
-                    );
-                
-                    const span4 = document.createElement("span");
-                    span4.classList.add(
-                        "absolute",
-                        "w-full",
-                        "h-full",
-                        "bg-green-500",
-                        "rotate-45",
-                        "group-hover:bottom-9",
-                        "duration-500",
-                        "bottom-12",
-                        "right-0"
-                    );
-                
-                    button.appendChild(text);
-                    button.appendChild(span1);
-                    button.appendChild(span2);
-                    button.appendChild(span3);
-                    button.appendChild(span4);
-                
-                    return button;
+                    const closeButton = document.createElement('a');
+                    closeButton.className = 'close-button';
+                    closeButton.onclick = CloseParts;
+
+                    const inDiv = document.createElement('div');
+                    inDiv.className = 'in';
+
+                    for (let i = 0; i < 2; i++) {
+                        const block = document.createElement('div');
+                        block.className = 'close-button-block';
+                        inDiv.appendChild(block);
+                    }
+
+                    const outDiv = document.createElement('div');
+                    outDiv.className = 'out';
+
+                    for (let i = 0; i < 2; i++) {
+                        const block = document.createElement('div');
+                        block.className = 'close-button-block';
+                        outDiv.appendChild(block);
+                    }
+
+                    closeButton.appendChild(inDiv);
+                    closeButton.appendChild(outDiv);
+
+                    return closeButton;
                 }                
                 
                 const btn = CriarButtonWithTextAndSpans();
